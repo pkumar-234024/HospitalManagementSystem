@@ -4,7 +4,6 @@ using HospitalManagementSystem.Core.Options;
 using HospitalManagementSystem.Infrastructure.Data;
 using HospitalManagementSystem.ServiceDefaults;
 using HospitalManagementSystem.Web.Configurations;
-using HospitalManagementSystem.Web.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -105,12 +104,6 @@ await app.UseAppMiddlewareAndSeedDatabase();
 
 app.MapDefaultEndpoints(); // Aspire health checks and metrics
 app.UseCors("AllowFrontend");
-
-// Add JWT Middleware
-app.UseMiddleware<JwtMiddleware>();
-
-app.UseAuthentication();
-app.UseAuthorization();
 app.Run();
 
 // Make the implicit Program.cs class public, so integration tests can reference the correct assembly for host building
