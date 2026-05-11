@@ -1,7 +1,0 @@
-{
-  "HospitalManagementSystem.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "D:\\working\\HospitalManagementSystem\\src\\HospitalManagementSystem.Core",
-  "HospitalManagementSystem.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "D:\\working\\HospitalManagementSystem\\src\\HospitalManagementSystem.Infrastructure",
-  "HospitalManagementSystem.ServiceDefaults, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "D:\\working\\HospitalManagementSystem\\src\\HospitalManagementSystem.ServiceDefaults",
-  "HospitalManagementSystem.UseCases, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "D:\\working\\HospitalManagementSystem\\src\\HospitalManagementSystem.UseCases",
-  "HospitalManagementSystem.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "D:\\working\\HospitalManagementSystem\\src\\HospitalManagementSystem.Web"
-}
