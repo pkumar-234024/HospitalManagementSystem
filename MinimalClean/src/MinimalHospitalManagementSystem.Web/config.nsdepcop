@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NsDepCopConfig>
+    <Allowed From="*" To="*" />
+
+    <Disallowed From="MinimalHospitalManagementSystem.Web.Domain.*"
+				To="MinimalHospitalManagementSystem.Web.Infrastructure.*" />
+    
+    <Disallowed From="MinimalHospitalManagementSystem.Web.CartFeatures.*"
+				To="MinimalHospitalManagementSystem.Web.Infrastructure.*" />
+    
+    <Disallowed From="MinimalHospitalManagementSystem.Web.ProductFeatures.*"
+				To="MinimalHospitalManagementSystem.Web.Infrastructure.*" />
+    
+    <Disallowed From="MinimalHospitalManagementSystem.Web.Domain.OrderAggregate.*"
+				To="MinimalHospitalManagementSystem.Web.Domain.CartAggregate.*" />
+
+    <AnalyzerConfig>
+        <IssueKind Name="IllegalDependency" Severity="Error" />
+    </AnalyzerConfig>
+</NsDepCopConfig>

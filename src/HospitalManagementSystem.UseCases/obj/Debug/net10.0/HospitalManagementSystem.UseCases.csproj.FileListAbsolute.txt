@@ -1,0 +1,15 @@
+D:\working\HospitalManagementSystem\src\HospitalManagementSystem.UseCases\bin\Debug\net10.0\HospitalManagementSystem.UseCases.deps.json
+D:\working\HospitalManagementSystem\src\HospitalManagementSystem.UseCases\bin\Debug\net10.0\HospitalManagementSystem.UseCases.dll
+D:\working\HospitalManagementSystem\src\HospitalManagementSystem.UseCases\bin\Debug\net10.0\HospitalManagementSystem.UseCases.pdb
+D:\working\HospitalManagementSystem\src\HospitalManagementSystem.UseCases\bin\Debug\net10.0\HospitalManagementSystem.Core.dll
+D:\working\HospitalManagementSystem\src\HospitalManagementSystem.UseCases\bin\Debug\net10.0\HospitalManagementSystem.Core.pdb
+D:\working\HospitalManagementSystem\src\HospitalManagementSystem.UseCases\obj\Debug\net10.0\HospitalManagementSystem.UseCases.csproj.AssemblyReference.cache
+D:\working\HospitalManagementSystem\src\HospitalManagementSystem.UseCases\obj\Debug\net10.0\HospitalManagementSystem.UseCases.GeneratedMSBuildEditorConfig.editorconfig
+D:\working\HospitalManagementSystem\src\HospitalManagementSystem.UseCases\obj\Debug\net10.0\HospitalManagementSystem.UseCases.AssemblyInfoInputs.cache
+D:\working\HospitalManagementSystem\src\HospitalManagementSystem.UseCases\obj\Debug\net10.0\HospitalManagementSystem.UseCases.AssemblyInfo.cs
+D:\working\HospitalManagementSystem\src\HospitalManagementSystem.UseCases\obj\Debug\net10.0\HospitalManagementSystem.UseCases.csproj.CoreCompileInputs.cache
+D:\working\HospitalManagementSystem\src\HospitalManagementSystem.UseCases\obj\Debug\net10.0\Hospital.286417CF.Up2Date
+D:\working\HospitalManagementSystem\src\HospitalManagementSystem.UseCases\obj\Debug\net10.0\HospitalManagementSystem.UseCases.dll
+D:\working\HospitalManagementSystem\src\HospitalManagementSystem.UseCases\obj\Debug\net10.0\refint\HospitalManagementSystem.UseCases.dll
+D:\working\HospitalManagementSystem\src\HospitalManagementSystem.UseCases\obj\Debug\net10.0\HospitalManagementSystem.UseCases.pdb
+D:\working\HospitalManagementSystem\src\HospitalManagementSystem.UseCases\obj\Debug\net10.0\ref\HospitalManagementSystem.UseCases.dll

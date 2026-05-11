@@ -1,0 +1,33 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".template.config/template.json" />
+    <File Path="CleanArchitecture.nuspec" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/HospitalManagementSystem.Core/HospitalManagementSystem.Core.csproj" />
+    <Project Path="src/HospitalManagementSystem.Infrastructure/HospitalManagementSystem.Infrastructure.csproj" />
+    <Project Path="src/HospitalManagementSystem.UseCases/HospitalManagementSystem.UseCases.csproj" />
+    <Project Path="src/HospitalManagementSystem.Web/HospitalManagementSystem.Web.csproj" />
+  </Folder>
+  <Folder Name="/src/_aspire/">
+    <Project Path="src/HospitalManagementSystem.AspireHost/HospitalManagementSystem.AspireHost.csproj" />
+    <Project Path="src/HospitalManagementSystem.ServiceDefaults/HospitalManagementSystem.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/HospitalManagementSystem.FunctionalTests/HospitalManagementSystem.FunctionalTests.csproj">
+      <BuildDependency Project="src/HospitalManagementSystem.Web/HospitalManagementSystem.Web.csproj" />
+    </Project>
+    <Project Path="tests/HospitalManagementSystem.IntegrationTests/HospitalManagementSystem.IntegrationTests.csproj">
+      <BuildDependency Project="src/HospitalManagementSystem.Infrastructure/HospitalManagementSystem.Infrastructure.csproj" />
+    </Project>
+    <Project Path="tests/HospitalManagementSystem.UnitTests/HospitalManagementSystem.UnitTests.csproj" />
+  </Folder>
+</Solution>
