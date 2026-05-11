@@ -22,7 +22,6 @@ public static class MiddlewareConfig
     }
 
     app.UseHttpsRedirection();
-    app.UseCors("AllowFrontend");
     app.UseAuthentication();
     app.UseAuthorization();
     app.UseFastEndpoints();
