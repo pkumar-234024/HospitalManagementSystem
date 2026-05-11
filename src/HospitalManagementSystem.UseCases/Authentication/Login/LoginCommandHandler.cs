@@ -35,7 +35,7 @@ public class LoginCommandHandler : ICommandHandler<LoginCommand, Result<LoginRes
         return new LoginResponse
         {
           Success = false,
-          Message = "Invalid email or password"
+          Message = "Entered the Incorect Email!"
         };
       }
 
@@ -80,7 +80,7 @@ public class LoginCommandHandler : ICommandHandler<LoginCommand, Result<LoginRes
         return new LoginResponse
         {
           Success = false,
-          Message = $"Invalid email or password. Attempts remaining: {MaxFailedAttempts - user.AccessFailedCount}",
+          Message = $"InCorrect Passsword. Attempts remaining: {MaxFailedAttempts - user.AccessFailedCount}",
           IsAccountLocked = user.IsAccountLocked
         };
       }
