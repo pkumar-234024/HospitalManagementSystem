@@ -18,4 +18,8 @@
     <PackageReference Include="Vogen" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Model\NewFolder\" />
+  </ItemGroup>
+
 </Project>

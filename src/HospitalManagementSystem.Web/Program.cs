@@ -4,7 +4,6 @@ using HospitalManagementSystem.Core.Options;
 using HospitalManagementSystem.Infrastructure.Data;
 using HospitalManagementSystem.ServiceDefaults;
 using HospitalManagementSystem.Web.Configurations;
-using HospitalManagementSystem.Web.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -91,11 +90,29 @@ builder.Services.AddCors(options =>
 {
   options.AddPolicy("AllowFrontend", policy =>
   {
+    var origins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
+
+    if (origins.Length > 0)
+    {
+      policy.WithOrigins(origins);
+    }
+    else
+    {
+      policy.WithOrigins(
+        "http://localhost:8080",
+        "https://localhost:8080",
+        "http://127.0.0.1:8080",
+        "https://127.0.0.1:8080",
+        "http://localhost:5173",
+        "https://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://127.0.0.1:5173");
+    }
+
     policy
-        .WithOrigins("https://yourdomain.com", "https://www.yourdomain.com")
-        .AllowAnyMethod()
-        .AllowAnyHeader()
-        .AllowCredentials();
+      .AllowAnyMethod()
+      .AllowAnyHeader()
+      .AllowCredentials();
   });
 });
 
@@ -105,12 +122,6 @@ await app.UseAppMiddlewareAndSeedDatabase();
 
 app.MapDefaultEndpoints(); // Aspire health checks and metrics
 app.UseCors("AllowFrontend");
-
-// Add JWT Middleware
-app.UseMiddleware<JwtMiddleware>();
-
-app.UseAuthentication();
-app.UseAuthorization();
 app.Run();
 
 // Make the implicit Program.cs class public, so integration tests can reference the correct assembly for host building

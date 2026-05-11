@@ -1,4 +1,4 @@
-﻿using Ardalis.ListStartupServices;
+using Ardalis.ListStartupServices;
 using HospitalManagementSystem.Core.Model.User;
 using HospitalManagementSystem.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
@@ -13,14 +13,18 @@ public static class MiddlewareConfig
     if (app.Environment.IsDevelopment())
     {
       app.UseDeveloperExceptionPage();
-      app.UseShowAllServicesMiddleware(); // see https://github.com/ardalis/AspNetCoreStartupServices
+      app.UseShowAllServicesMiddleware();
     }
     else
-    {   
-      app.UseDefaultExceptionHandler(); // from FastEndpoints
+    {
+      app.UseDefaultExceptionHandler();
       app.UseHsts();
     }
 
+    app.UseHttpsRedirection();
+    app.UseCors("AllowFrontend");
+    app.UseAuthentication();
+    app.UseAuthorization();
     app.UseFastEndpoints();
 
     if (app.Environment.IsDevelopment())
@@ -34,7 +38,7 @@ public static class MiddlewareConfig
         settings.Path = "/swagger";
         settings.DocumentPath = "/openapi/{documentName}.json";
       });
-  
+
       app.MapScalarApiReference(options =>
       {
         options.WithTitle("Clean Architecture API");
@@ -42,12 +46,9 @@ public static class MiddlewareConfig
       });
     }
 
-    app.UseHttpsRedirection(); // Note this will drop Authorization headers
-
-    // Run migrations and seed in Development or when explicitly requested via environment variable
-    var shouldMigrate = app.Environment.IsDevelopment() || 
+    var shouldMigrate = app.Environment.IsDevelopment() ||
                         app.Configuration.GetValue<bool>("Database:ApplyMigrationsOnStartup");
-    
+
     if (shouldMigrate)
     {
       await MigrateDatabaseAsync(app);
@@ -67,9 +68,7 @@ public static class MiddlewareConfig
     {
       logger.LogInformation("Applying database migrations...");
       var context = services.GetRequiredService<AppDbContext>();
-      
-      // For SQLite, use EnsureCreated instead of migrations (common for dev/local scenarios)
-      // For SQL Server, use migrations (production scenario)
+
       if (context.Database.IsSqlite())
       {
         await context.Database.EnsureCreatedAsync();
@@ -84,7 +83,7 @@ public static class MiddlewareConfig
     catch (Exception ex)
     {
       logger.LogError(ex, "An error occurred migrating the DB. {exceptionMessage}", ex.Message);
-      throw; // Re-throw to make startup fail if migrations fail
+      throw;
     }
   }
 
@@ -106,7 +105,6 @@ public static class MiddlewareConfig
     catch (Exception ex)
     {
       logger.LogError(ex, "An error occurred seeding the DB. {exceptionMessage}", ex.Message);
-      // Don't re-throw for seeding errors - it's not critical
     }
   }
 }

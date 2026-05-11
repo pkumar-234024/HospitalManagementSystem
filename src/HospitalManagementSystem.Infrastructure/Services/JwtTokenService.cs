@@ -106,7 +106,7 @@ public class JwtTokenService : IJwtTokenService
       {
         HttpOnly = true,
         Secure = true,
-        SameSite = SameSiteMode.Strict,
+        SameSite = SameSiteMode.None,
         Expires = DateTimeOffset.UtcNow.AddMinutes(15)
       };
       var context = _httpContextAccessor.HttpContext;
@@ -120,7 +120,7 @@ public class JwtTokenService : IJwtTokenService
       {
         HttpOnly = true,
         Secure = true,
-        SameSite = SameSiteMode.Strict,
+        SameSite = SameSiteMode.None,
         Expires = DateTimeOffset.UtcNow.AddDays(7)
       };
       context.Response.Cookies.Append(RefreshTokenCookie, refreshToken, refreshCookieOptions);
