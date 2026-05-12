@@ -9,6 +9,7 @@ public class ApplicationUser : IdentityUser
   public string FullName { get; set; } = string.Empty;
   public int UserId { get; set; }
   public string ProfilePicture { get; set; } = string.Empty;
+  public Guid? HospitalId { get; set; }
 
   // Email Verification
   public DateTime? EmailVerifiedAt { get; set; }

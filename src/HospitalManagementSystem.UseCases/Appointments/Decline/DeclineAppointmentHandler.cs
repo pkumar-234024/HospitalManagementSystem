@@ -1,9 +1,12 @@
 using HospitalManagementSystem.Core.AppointmentAggregate;
+using HospitalManagementSystem.Core.HospitalAggregate;
 using HospitalManagementSystem.UseCases.Appointments;
 
 namespace HospitalManagementSystem.UseCases.Appointments.Decline;
 
-public class DeclineAppointmentHandler(IRepository<Appointment> repository)
+public class DeclineAppointmentHandler(
+  IRepository<Appointment> repository,
+  IRepository<Hospital> hospitalRepository)
   : ICommandHandler<DeclineAppointmentCommand, Result<AppointmentDto>>
 {
   public async ValueTask<Result<AppointmentDto>> Handle(DeclineAppointmentCommand command, CancellationToken cancellationToken)
@@ -14,7 +17,17 @@ public class DeclineAppointmentHandler(IRepository<Appointment> repository)
       return Result.NotFound();
     }
 
-    if (!command.CanReviewAnyAppointment && appointment.DoctorUserId != command.ReviewedByUserId)
+    if (!command.CanReviewAcrossHospitals && !command.ReviewerHospitalId.HasValue)
+    {
+      return Result.Forbidden();
+    }
+
+    if (!command.CanReviewAcrossHospitals && command.ReviewerHospitalId.HasValue && appointment.HospitalId != command.ReviewerHospitalId.Value)
+    {
+      return Result.Forbidden();
+    }
+
+    if (command.IsDoctor && appointment.DoctorUserId != command.ReviewedByUserId)
     {
       return Result.Forbidden();
     }
@@ -23,7 +36,9 @@ public class DeclineAppointmentHandler(IRepository<Appointment> repository)
     {
       appointment.Decline(command.ReviewedByUserId, command.Reason);
       await repository.UpdateAsync(appointment, cancellationToken);
-      return Result.Success(AppointmentDto.FromEntity(appointment));
+
+      var hospital = await hospitalRepository.GetByIdAsync(appointment.HospitalId, cancellationToken);
+      return Result.Success(AppointmentDto.FromEntity(appointment, string.Empty, hospital?.Name ?? string.Empty));
     }
     catch (InvalidOperationException ex)
     {

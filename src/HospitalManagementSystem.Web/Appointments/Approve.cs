@@ -1,14 +1,17 @@
+using HospitalManagementSystem.Core.Model.User;
 using HospitalManagementSystem.UseCases.Appointments;
 using HospitalManagementSystem.UseCases.Appointments.Approve;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace HospitalManagementSystem.Web.Appointments;
 
-public class ApproveAppointment(IMediator mediator)
+public class ApproveAppointment(IMediator mediator, UserManager<ApplicationUser> userManager)
   : Endpoint<ApproveAppointmentRequest, Results<Ok<AppointmentDto>, NotFound, ForbidHttpResult, ProblemHttpResult>>
 {
   private readonly IMediator _mediator = mediator;
+  private readonly UserManager<ApplicationUser> _userManager = userManager;
 
   public override void Configure()
   {
@@ -30,10 +33,12 @@ public class ApproveAppointment(IMediator mediator)
     CancellationToken cancellationToken)
   {
     var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
-    var canReviewAnyAppointment = User.IsInRole("Admin") || User.IsInRole("Receptionist");
+    var currentUser = await _userManager.FindByIdAsync(currentUserId);
+    var canReviewAcrossHospitals = currentUser is not null && currentUser.HospitalId is null && User.IsInRole("Admin");
+    var isDoctor = User.IsInRole("Doctor");
 
     var result = await _mediator.Send(
-      new ApproveAppointmentCommand(request.AppointmentId, currentUserId, canReviewAnyAppointment),
+      new ApproveAppointmentCommand(request.AppointmentId, currentUserId, currentUser?.HospitalId, canReviewAcrossHospitals, isDoctor),
       cancellationToken);
 
     return result.Status switch

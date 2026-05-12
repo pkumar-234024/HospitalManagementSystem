@@ -5,4 +5,6 @@ namespace HospitalManagementSystem.UseCases.Appointments.Approve;
 public record ApproveAppointmentCommand(
   Guid AppointmentId,
   string ReviewedByUserId,
-  bool CanReviewAnyAppointment) : ICommand<Result<AppointmentDto>>;
+  Guid? ReviewerHospitalId,
+  bool CanReviewAcrossHospitals,
+  bool IsDoctor) : ICommand<Result<AppointmentDto>>;

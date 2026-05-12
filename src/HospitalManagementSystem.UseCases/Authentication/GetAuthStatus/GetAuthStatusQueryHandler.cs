@@ -1,4 +1,4 @@
-﻿using HospitalManagementSystem.Core.Model.User;
+using HospitalManagementSystem.Core.Model.User;
 using HospitalManagementSystem.UseCases.Authentication.Dtos;
 using Microsoft.AspNetCore.Identity;
 
@@ -32,6 +32,7 @@ public class GetAuthStatusQueryHandler : IQueryHandler<GetAuthStatusQuery, AuthS
         IsAuthenticated = true,
         UserId = user.Id.ToString(),
         Email = user.Email!,
+        HospitalId = user.HospitalId,
         Roles = (await _userManager.GetRolesAsync(user)).ToList(),
         EmailVerified = user.EmailVerifiedAt.HasValue,
         IsAccountLocked = user.IsAccountLocked,

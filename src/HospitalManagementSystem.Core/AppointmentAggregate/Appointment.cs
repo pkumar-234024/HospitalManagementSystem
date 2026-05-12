@@ -7,6 +7,7 @@ public class Appointment : IAggregateRoot
   private Appointment() { }
 
   public Appointment(
+    Guid hospitalId,
     string patientName,
     string patientEmail,
     string patientPhoneNumber,
@@ -15,6 +16,7 @@ public class Appointment : IAggregateRoot
     string reason)
   {
     Id = Guid.NewGuid();
+    HospitalId = hospitalId;
     PatientName = patientName;
     PatientEmail = patientEmail;
     PatientPhoneNumber = patientPhoneNumber;
@@ -26,6 +28,7 @@ public class Appointment : IAggregateRoot
   }
 
   public Guid Id { get; private set; }
+  public Guid HospitalId { get; private set; }
   public string PatientName { get; private set; } = string.Empty;
   public string PatientEmail { get; private set; } = string.Empty;
   public string PatientPhoneNumber { get; private set; } = string.Empty;

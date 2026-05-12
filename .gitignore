@@ -17,3 +17,4 @@
 /tests/HospitalManagementSystem.UnitTests/bin
 /tests/HospitalManagementSystem.UnitTests/obj
 /.vs
+/.artifacts

@@ -1,4 +1,5 @@
 using HospitalManagementSystem.Core.AppointmentAggregate;
+using HospitalManagementSystem.Core.HospitalAggregate;
 using HospitalManagementSystem.Core.Model.User;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -24,6 +25,9 @@ public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
       .HasMaxLength(25)
       .IsRequired();
 
+    builder.Property(x => x.HospitalId)
+      .IsRequired();
+
     builder.Property(x => x.DoctorUserId)
       .HasMaxLength(450)
       .IsRequired();
@@ -39,8 +43,14 @@ public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
     builder.Property(x => x.DecisionNote)
       .HasMaxLength(1000);
 
-    builder.HasIndex(x => new { x.DoctorUserId, x.AppointmentDateTime });
+    builder.HasIndex(x => new { x.HospitalId, x.DoctorUserId, x.AppointmentDateTime });
+    builder.HasIndex(x => x.HospitalId);
     builder.HasIndex(x => x.Status);
+
+    builder.HasOne<Hospital>()
+      .WithMany()
+      .HasForeignKey(x => x.HospitalId)
+      .OnDelete(DeleteBehavior.Restrict);
 
     builder.HasOne<ApplicationUser>()
       .WithMany()

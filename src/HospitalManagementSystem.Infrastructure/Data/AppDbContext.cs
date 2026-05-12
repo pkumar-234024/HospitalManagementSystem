@@ -1,5 +1,6 @@
 using HospitalManagementSystem.Core.AppointmentAggregate;
 using HospitalManagementSystem.Core.ContributorAggregate;
+using HospitalManagementSystem.Core.HospitalAggregate;
 using HospitalManagementSystem.Core.Model.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -9,6 +10,7 @@ namespace HospitalManagementSystem.Infrastructure.Data;
 public class AppDbContext : IdentityDbContext<ApplicationUser>
 {
   public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+  public DbSet<Hospital> Hospitals => Set<Hospital>();
   public DbSet<Appointment> Appointments => Set<Appointment>();
   public DbSet<Contributor> Contributors => Set<Contributor>();
   public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();

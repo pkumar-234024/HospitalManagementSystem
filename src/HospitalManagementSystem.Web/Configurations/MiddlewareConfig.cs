@@ -98,7 +98,7 @@ public static class MiddlewareConfig
       logger.LogInformation("Seeding database...");
       var context = services.GetRequiredService<AppDbContext>();
       await SeedData.InitializeAsync(context);
-      await IdentitySeeder.SeedAsync(userManager, roleManager);
+      await IdentitySeeder.SeedAsync(context, userManager, roleManager);
       logger.LogInformation("Database seeded successfully");
     }
     catch (Exception ex)

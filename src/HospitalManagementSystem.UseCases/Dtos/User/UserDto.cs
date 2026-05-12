@@ -7,5 +7,7 @@ public class UserDto
   public string Email { get; set; } = string.Empty;
   public string PhoneNumber { get; set; } = string.Empty;
   public string ProfilePicture { get; set; } = string.Empty;
+  public Guid? HospitalId { get; set; }
+  public string HospitalName { get; set; } = string.Empty;
   public DateTime CreatedAt { get; set; }
 }

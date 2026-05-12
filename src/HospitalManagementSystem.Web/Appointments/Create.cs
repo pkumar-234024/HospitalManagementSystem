@@ -22,6 +22,7 @@ public class Create(IMediator mediator)
       s.Description = "Creates a pending appointment request without requiring a login.";
       s.ExampleRequest = new CreateAppointmentRequest
       {
+        HospitalId = Guid.Parse("00000000-0000-0000-0000-000000000001"),
         PatientName = "Jane Patient",
         PatientEmail = "jane@example.com",
         PatientPhoneNumber = "+1 555 123 4567",
@@ -38,6 +39,7 @@ public class Create(IMediator mediator)
     CancellationToken cancellationToken)
   {
     var result = await _mediator.Send(new CreateAppointmentCommand(
+      request.HospitalId,
       request.PatientName,
       request.PatientEmail,
       request.PatientPhoneNumber,
@@ -53,6 +55,7 @@ public class Create(IMediator mediator)
 
 public sealed class CreateAppointmentRequest
 {
+  public Guid HospitalId { get; set; }
   public string PatientName { get; set; } = string.Empty;
   public string PatientEmail { get; set; } = string.Empty;
   public string PatientPhoneNumber { get; set; } = string.Empty;
@@ -65,6 +68,9 @@ public sealed class CreateAppointmentValidator : Validator<CreateAppointmentRequ
 {
   public CreateAppointmentValidator()
   {
+    RuleFor(x => x.HospitalId)
+      .NotEmpty();
+
     RuleFor(x => x.PatientName)
       .NotEmpty()
       .MaximumLength(100);

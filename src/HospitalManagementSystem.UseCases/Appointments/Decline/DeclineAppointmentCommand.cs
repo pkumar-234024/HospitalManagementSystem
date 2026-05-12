@@ -5,5 +5,7 @@ namespace HospitalManagementSystem.UseCases.Appointments.Decline;
 public record DeclineAppointmentCommand(
   Guid AppointmentId,
   string ReviewedByUserId,
-  bool CanReviewAnyAppointment,
+  Guid? ReviewerHospitalId,
+  bool CanReviewAcrossHospitals,
+  bool IsDoctor,
   string? Reason) : ICommand<Result<AppointmentDto>>;

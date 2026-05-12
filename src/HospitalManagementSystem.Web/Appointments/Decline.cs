@@ -1,15 +1,18 @@
 using FluentValidation;
+using HospitalManagementSystem.Core.Model.User;
 using HospitalManagementSystem.UseCases.Appointments;
 using HospitalManagementSystem.UseCases.Appointments.Decline;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace HospitalManagementSystem.Web.Appointments;
 
-public class DeclineAppointment(IMediator mediator)
+public class DeclineAppointment(IMediator mediator, UserManager<ApplicationUser> userManager)
   : Endpoint<DeclineAppointmentRequest, Results<Ok<AppointmentDto>, NotFound, ForbidHttpResult, ProblemHttpResult>>
 {
   private readonly IMediator _mediator = mediator;
+  private readonly UserManager<ApplicationUser> _userManager = userManager;
 
   public override void Configure()
   {
@@ -31,10 +34,12 @@ public class DeclineAppointment(IMediator mediator)
     CancellationToken cancellationToken)
   {
     var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
-    var canReviewAnyAppointment = User.IsInRole("Admin") || User.IsInRole("Receptionist");
+    var currentUser = await _userManager.FindByIdAsync(currentUserId);
+    var canReviewAcrossHospitals = currentUser is not null && currentUser.HospitalId is null && User.IsInRole("Admin");
+    var isDoctor = User.IsInRole("Doctor");
 
     var result = await _mediator.Send(
-      new DeclineAppointmentCommand(request.AppointmentId, currentUserId, canReviewAnyAppointment, request.Reason),
+      new DeclineAppointmentCommand(request.AppointmentId, currentUserId, currentUser?.HospitalId, canReviewAcrossHospitals, isDoctor, request.Reason),
       cancellationToken);
 
     return result.Status switch

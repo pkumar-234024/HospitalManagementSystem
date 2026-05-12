@@ -96,6 +96,8 @@ public class RefreshTokenCommandHandler : ICommandHandler<RefreshTokenCommand, L
       Email = user.Email!,
       PhoneNumber = user.PhoneNumber!,
       ProfilePicture = user.ProfilePicture,
+      HospitalId = user.HospitalId,
+      HospitalName = string.Empty,
       CreatedAt = user.CreatedAt
     };
   }

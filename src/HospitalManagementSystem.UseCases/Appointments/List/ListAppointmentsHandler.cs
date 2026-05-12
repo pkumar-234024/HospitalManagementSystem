@@ -10,6 +10,8 @@ public class ListAppointmentsHandler(IListAppointmentsQueryService queryService)
     var result = await queryService.ListAsync(
       request.Page ?? 1,
       request.PerPage ?? Constants.DEFAULT_PAGE_SIZE,
+      request.HospitalId,
+      request.CanViewAllHospitals,
       request.Status);
 
     return Result.Success(result);

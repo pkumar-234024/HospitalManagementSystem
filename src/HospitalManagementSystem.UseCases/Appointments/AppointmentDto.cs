@@ -4,6 +4,8 @@ namespace HospitalManagementSystem.UseCases.Appointments;
 
 public record AppointmentDto(
   Guid Id,
+  Guid HospitalId,
+  string HospitalName,
   string PatientName,
   string PatientEmail,
   string PatientPhoneNumber,
@@ -19,8 +21,13 @@ public record AppointmentDto(
   DateTimeOffset? UpdatedAt)
 {
   public static AppointmentDto FromEntity(Appointment appointment, string doctorName = "")
+    => FromEntity(appointment, doctorName, string.Empty);
+
+  public static AppointmentDto FromEntity(Appointment appointment, string doctorName, string hospitalName)
     => new(
       appointment.Id,
+      appointment.HospitalId,
+      hospitalName,
       appointment.PatientName,
       appointment.PatientEmail,
       appointment.PatientPhoneNumber,

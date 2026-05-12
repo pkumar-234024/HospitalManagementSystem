@@ -16,6 +16,8 @@ public class ListAppointmentsQueryService : IListAppointmentsQueryService
   public async Task<UseCases.PagedResult<AppointmentDto>> ListAsync(
     int page,
     int perPage,
+    Guid? hospitalId = null,
+    bool canViewAllHospitals = false,
     AppointmentStatus? status = null)
   {
     var baseQuery =
@@ -23,11 +25,20 @@ public class ListAppointmentsQueryService : IListAppointmentsQueryService
       join doctor in _db.Users.AsNoTracking()
         on appointment.DoctorUserId equals doctor.Id into doctors
       from doctor in doctors.DefaultIfEmpty()
+      join hospital in _db.Hospitals.AsNoTracking()
+        on appointment.HospitalId equals hospital.Id into hospitals
+      from hospital in hospitals.DefaultIfEmpty()
       select new
       {
         Appointment = appointment,
-        DoctorName = doctor == null ? string.Empty : doctor.FullName
+        DoctorName = doctor == null ? string.Empty : doctor.FullName,
+        HospitalName = hospital == null ? string.Empty : hospital.Name
       };
+
+    if (!canViewAllHospitals && hospitalId.HasValue)
+    {
+      baseQuery = baseQuery.Where(x => x.Appointment.HospitalId == hospitalId.Value);
+    }
 
     if (status.HasValue)
     {
@@ -44,11 +55,13 @@ public class ListAppointmentsQueryService : IListAppointmentsQueryService
       .Select(x => new
       {
         x.Appointment.Id,
+        x.Appointment.HospitalId,
         x.Appointment.PatientName,
         x.Appointment.PatientEmail,
         x.Appointment.PatientPhoneNumber,
         x.Appointment.DoctorUserId,
         x.DoctorName,
+        x.HospitalName,
         x.Appointment.AppointmentDateTime,
         x.Appointment.Reason,
         x.Appointment.Status,
@@ -61,6 +74,8 @@ public class ListAppointmentsQueryService : IListAppointmentsQueryService
       .ToListAsync())
       .Select(x => new AppointmentDto(
         x.Id,
+        x.HospitalId,
+        x.HospitalName,
         x.PatientName,
         x.PatientEmail,
         x.PatientPhoneNumber,

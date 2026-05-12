@@ -109,6 +109,8 @@ public class RegisterCommandHandler : ICommandHandler<RegisterCommand, LoginResp
       Email = user.Email!,
       PhoneNumber = user.PhoneNumber!,
       ProfilePicture = user.ProfilePicture,
+      HospitalId = user.HospitalId,
+      HospitalName = string.Empty,
       CreatedAt = user.CreatedAt
     };
   }
