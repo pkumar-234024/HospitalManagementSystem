@@ -1,4 +1,4 @@
-using HospitalManagementSystem.Core.Interfaces;
+﻿using HospitalManagementSystem.Core.Interfaces;
 using HospitalManagementSystem.Core.Services;
 using HospitalManagementSystem.Infrastructure.Data;
 using HospitalManagementSystem.Infrastructure.Data.Queries;
